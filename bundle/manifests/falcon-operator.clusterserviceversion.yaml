@@ -148,7 +148,7 @@ metadata:
     capabilities: Seamless Upgrades
     categories: Security,Monitoring
     containerImage: quay.io/crowdstrike/falcon-operator
-    createdAt: "2025-04-03T15:50:54Z"
+    createdAt: "2025-05-19T03:10:19Z"
     description: Falcon Operator installs CrowdStrike Falcon Sensors on the cluster
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -165,7 +165,7 @@ metadata:
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v4
     repository: https://github.com/CrowdStrike/falcon-operator
     support: Community Only
-  name: falcon-operator.v1.4.0
+  name: falcon-operator.v1.5.0-kac-multi-arch
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -527,6 +527,10 @@ spec:
         path: falcon.trace
       - displayName: Falcon Container Injector Resources
         path: injector.resources
+      - description: Specifies node affinity for scheduling the Container Sensor.
+          Only amd64 linux nodes are supported.
+        displayName: Node Affinity
+        path: nodeAffinity
       - description: Utilize default or Pay-As-You-Go billing.
         displayName: Billing
         path: falcon.billing
@@ -1152,6 +1156,10 @@ spec:
         path: falconContainerSensor.falcon.trace
       - displayName: Falcon Container Injector Resources
         path: falconContainerSensor.injector.resources
+      - description: Specifies node affinity for scheduling the Container Sensor.
+          Only amd64 linux nodes are supported.
+        displayName: Node Affinity
+        path: falconContainerSensor.nodeAffinity
       - description: Location of the Image Analyzer image. Use only in cases when
           you mirror the original image to your repository/name:tag
         displayName: Falcon Image Analyzer Image URI
@@ -1987,7 +1995,7 @@ spec:
                       fieldPath: metadata.annotations['olm.targetNamespaces']
                 - name: OPERATOR_NAME
                   value: falcon-operator
-                image: quay.io/crowdstrike/falcon-operator:1.4.0
+                image: quay.io/crowdstrike/falcon-operator:kac-multi-arch
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -2086,4 +2094,4 @@ spec:
   provider:
     name: CrowdStrike
     url: https://crowdStrike.com
-  version: 1.4.0
+  version: 1.5.0-kac-multi-arch

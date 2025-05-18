@@ -384,7 +384,7 @@ spec:
       - displayName: Falcon Container Injector Resources
         path: injector.resources
       - description: Specifies node affinity for scheduling the Container Sensor.
-          Defaults to allowing scheduling is on amd64 linux nodes.
+          Only amd64 linux nodes are supported.
         displayName: Node Affinity
         path: nodeAffinity
       - description: Utilize default or Pay-As-You-Go billing.
@@ -1013,7 +1013,7 @@ spec:
       - displayName: Falcon Container Injector Resources
         path: falconContainerSensor.injector.resources
       - description: Specifies node affinity for scheduling the Container Sensor.
-          Defaults to allowing scheduling is on amd64 linux nodes.
+          Only amd64 linux nodes are supported.
         displayName: Node Affinity
         path: falconContainerSensor.nodeAffinity
       - description: Location of the Image Analyzer image. Use only in cases when
