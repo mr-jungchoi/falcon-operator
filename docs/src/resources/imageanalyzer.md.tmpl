@@ -80,9 +80,9 @@ Falcon secret settings are used to read the following sensitive Falcon API and s
 ##### Secret Keys
 | Secret Key                | Description                                                                                                     |
 |:--------------------------|:----------------------------------------------------------------------------------------------------------------|
-| falcon-client-id          | Replaces [`falcon_api.client_id`](#falcon-api-settings); Requires `falcon_api.cloud` in CRD spec is defined     |
-| falcon-client-secret      | Replaces [`falcon_api.client_secret`](#falcon-api-settings); Requires `falcon_api.cloud` in CRD spec is defined |
-| falcon-cid                | Replaces [`falcon_api.cid`](#falcon-api-settings); Requires `falcon_api.cloud` in CRD spec is defined           |
+| falcon-client-id          | Replaces [`falcon_api.client_id`](#falcon-api-settings); Requires `falcon_api.cloud_region` in CRD spec is defined     |
+| falcon-client-secret      | Replaces [`falcon_api.client_secret`](#falcon-api-settings); Requires `falcon_api.cloud_region` in CRD spec is defined |
+| falcon-cid                | Replaces [`falcon_api.cid`](#falcon-api-settings); Requires `falcon_api.cloud_region` in CRD spec is defined           |
 
 Example of creating k8s secret with sensitive Falcon values:
 ```bash
