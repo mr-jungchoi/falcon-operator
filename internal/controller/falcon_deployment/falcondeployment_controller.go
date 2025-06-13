@@ -166,13 +166,9 @@ func (r *FalconDeploymentReconciler) reconcileAdmissionController(ctx context.Co
 
 	if *falconDeployment.Spec.DeployAdmissionController {
 		newFalconAdmission := &falconv1alpha1.FalconAdmission{}
-		if newFalconAdmission.Spec.FalconAPI == nil {
-			newFalconAdmission.Spec.FalconAPI = falconDeployment.Spec.FalconAPI
-		} else {
-			newFalconAdmission.Spec.FalconAPI = falconDeployment.Spec.FalconAdmission.FalconAPI
-		}
-
+		newFalconAdmission.Spec.FalconAPI = falconDeployment.Spec.FalconAPI
 		newFalconAdmission.Spec.Registry = falconDeployment.Spec.Registry
+		newFalconAdmission.Spec.FalconSecret = falconDeployment.Spec.FalconSecret
 		newFalconAdmission.ObjectMeta = metav1.ObjectMeta{
 			Name:      "falcon-kac",
 			Namespace: falconDeployment.Spec.FalconAdmission.InstallNamespace,
@@ -237,6 +233,7 @@ func (r *FalconDeploymentReconciler) reconcileNodeSensor(ctx context.Context, lo
 	if *falconDeployment.Spec.DeployNodeSensor {
 		newNodeSensor := &falconv1alpha1.FalconNodeSensor{}
 		newNodeSensor.Spec.FalconAPI = falconDeployment.Spec.FalconAPI
+		newNodeSensor.Spec.FalconSecret = falconDeployment.Spec.FalconSecret
 		newNodeSensor.ObjectMeta = metav1.ObjectMeta{
 			Name:      "falcon-node-sensor",
 			Namespace: falconDeployment.Spec.FalconNodeSensor.InstallNamespace,
@@ -302,6 +299,7 @@ func (r *FalconDeploymentReconciler) reconcileImageAnalyzer(ctx context.Context,
 		newImageAnalyzer := &falconv1alpha1.FalconImageAnalyzer{}
 		newImageAnalyzer.Spec.FalconAPI = falconDeployment.Spec.FalconAPI
 		newImageAnalyzer.Spec.Registry = falconDeployment.Spec.Registry
+		newImageAnalyzer.Spec.FalconSecret = falconDeployment.Spec.FalconSecret
 		newImageAnalyzer.ObjectMeta = metav1.ObjectMeta{
 			Name:      "falcon-image-analyzer",
 			Namespace: falconDeployment.Spec.FalconNodeSensor.InstallNamespace,
@@ -366,6 +364,7 @@ func (r *FalconDeploymentReconciler) reconcileContainerSensor(ctx context.Contex
 		newContainerSensor := &falconv1alpha1.FalconContainer{}
 		newContainerSensor.Spec.FalconAPI = falconDeployment.Spec.FalconAPI
 		newContainerSensor.Spec.Registry = falconDeployment.Spec.Registry
+		newContainerSensor.Spec.FalconSecret = falconDeployment.Spec.FalconSecret
 		newContainerSensor.ObjectMeta = metav1.ObjectMeta{
 			Name:      "falcon-container-sensor",
 			Namespace: falconDeployment.Spec.FalconContainerSensor.InstallNamespace,
