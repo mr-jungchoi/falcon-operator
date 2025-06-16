@@ -104,7 +104,7 @@ func (r *FalconDeploymentReconciler) Reconcile(ctx context.Context, req ctrl.Req
 	}
 
 	if falconDeployment.Spec.FalconAPI != nil {
-		cloud, err := falconDeployment.Spec.FalconAPI.FalconCloud(ctx)
+		cloud, err := falconDeployment.Spec.FalconAPI.FalconCloudWithSecret(ctx, r.Client, falconDeployment.Spec.FalconSecret)
 		if err != nil {
 			log.Error(err, "Failed to get Cloud Region")
 			return ctrl.Result{}, err

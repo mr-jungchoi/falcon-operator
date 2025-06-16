@@ -118,9 +118,13 @@ func (fa *FalconAPI) ApiConfigWithSecret(
 	}
 
 	clientId, clientSecret := falcon_secret.GetFalconCredsFromSecret(falconApiSecret)
+	cloudRegion := ""
+	if fa != nil {
+		cloudRegion = fa.CloudRegion
+	}
 
 	return &falcon.ApiConfig{
-		Cloud:             falcon.Cloud(fa.CloudRegion),
+		Cloud:             falcon.Cloud(cloudRegion),
 		ClientId:          clientId,
 		ClientSecret:      clientSecret,
 		HostOverride:      fa.HostOverride,
