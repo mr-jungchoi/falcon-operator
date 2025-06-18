@@ -902,7 +902,12 @@ var _ = Describe("falcon", Ordered, func() {
 				createNamespaceCmd := exec.Command("kubectl", "create", "ns", falconSecretNamespace)
 				_, _ = utils.Run(createNamespaceCmd)
 
-				createSecretCmd := exec.Command("kubectl", "create", "secret", "generic", falconSecretName, "-n", falconSecretNamespace, fmt.Sprintf("--from-literal=falcon-client-id=%s", falconClientID), fmt.Sprintf("--from-literal=falcon-client-secret=%s", falconClientSecret))
+				createSecretCmd := exec.Command("kubectl", "create", "secret", "generic", falconSecretName,
+					"-n", falconSecretNamespace,
+					"--from-env-file=-")
+				secretData := fmt.Sprintf("falcon-client-id=%s\nfalcon-client-secret=%s",
+					os.Getenv("FALCON_CLIENT_ID"), os.Getenv("FALCON_CLIENT_SECRET"))
+				createSecretCmd.Stdin = strings.NewReader(secretData)
 				_, _ = utils.Run(createSecretCmd)
 
 				err := utils.ReplaceInFile(filepath.Join(projectDir,

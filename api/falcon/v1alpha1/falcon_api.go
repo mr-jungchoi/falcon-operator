@@ -119,21 +119,19 @@ func (fa *FalconAPI) ApiConfigWithSecret(
 
 	clientId, clientSecret := falcon_secret.GetFalconCredsFromSecret(falconApiSecret)
 	cloudRegion := ""
+	hostOverride := ""
 	if fa != nil {
 		cloudRegion = fa.CloudRegion
+		hostOverride = fa.HostOverride
 	}
 
 	return &falcon.ApiConfig{
 		Cloud:             falcon.Cloud(cloudRegion),
 		ClientId:          clientId,
 		ClientSecret:      clientSecret,
-		HostOverride:      fa.HostOverride,
+		HostOverride:      hostOverride,
 		UserAgentOverride: fmt.Sprintf("falcon-operator/%s", version.Version),
 	}, nil
-}
-
-func (fa *FalconAPI) FalconCloud(ctx context.Context) (falcon.CloudType, error) {
-	return falcon_api.FalconCloud(ctx, fa.ApiConfig())
 }
 
 func (fa *FalconAPI) FalconCloudWithSecret(
