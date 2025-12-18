@@ -232,13 +232,12 @@ func DaemonsetConfigMapName(node *falconv1alpha1.FalconNodeSensor) string {
 	return node.Name + "-config"
 }
 
-// buildInitContainers returns the init containers for the daemonset
 func buildInitContainers(image string, node *falconv1alpha1.FalconNodeSensor) []corev1.Container {
 	privileged := true
 	escalation := true
 	runAsRoot := int64(0)
 
-	initContainers := []corev1.Container{
+	return []corev1.Container{
 		{
 			Name:      "init-falconstore",
 			Image:     image,
@@ -257,32 +256,15 @@ func buildInitContainers(image string, node *falconv1alpha1.FalconNodeSensor) []
 					Name: "POD_NODE_NAME",
 					ValueFrom: &corev1.EnvVarSource{
 						FieldRef: &corev1.ObjectFieldSelector{
-							APIVersion: "v1",
-							FieldPath:  "spec.nodeName",
+							FieldPath: "spec.nodeName",
 						},
 					},
 				},
 			},
 		},
-	}
-
-	// Add init-configuration container if InitConfigImage is specified
-	if node.Spec.Node.InitConfigImage != "" {
-		initConfigContainer := corev1.Container{
-			Name:    "init-configuration",
-			Image:   node.Spec.Node.InitConfigImage,
-			Command: common.FalconShellCommand,
-			Args: []string{
-				"-c",
-				`# Check if AID file exists (indicating a restart)
-if [ -f /opt/CrowdStrike/falconstore ]; then
-    echo "AID detected, skipping configuration copy (restart scenario)"
-else
-    echo "No AID detected, copying configuration (first install)"
-    # Add your configuration copy logic here
-    # This is where the init container would copy pre-configuration
-fi`,
-			},
+		{
+			Name:  "init-preconfiguration",
+			Image: node.Spec.Node.PreconfigImage,
 			SecurityContext: &corev1.SecurityContext{
 				RunAsUser:                &runAsRoot,
 				ReadOnlyRootFilesystem:   isInitReadOnlyRootFilesystem(node),
@@ -294,11 +276,8 @@ fi`,
 					MountPath: "/opt/CrowdStrike",
 				},
 			},
-		}
-		initContainers = append(initContainers, initConfigContainer)
+		},
 	}
-
-	return initContainers
 }
 
 func Daemonset(dsName, image, serviceAccount string, node *falconv1alpha1.FalconNodeSensor) *appsv1.DaemonSet {

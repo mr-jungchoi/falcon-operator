@@ -7501,12 +7501,6 @@ spec:
                           type: object
                           x-kubernetes-map-type: atomic
                         type: array
-                      initConfigImage:
-                        description: Location of the init-container image for pre-configuration.
-                          This image should contain the configuration logic that runs
-                          before the main sensor.
-                        pattern: ^.*:.*$
-                        type: string
                       nodeAffinity:
                         description: Specifies node affinity for scheduling the DaemonSet.
                           Defaults to allowing scheduling on all nodes.
@@ -7706,6 +7700,13 @@ spec:
                             type: object
                             x-kubernetes-map-type: atomic
                         type: object
+                      preconfigImage:
+                        description: Location of the pre-configuration container image.
+                          This image should contain the configuration logic that runs
+                          before the main sensor.
+                        minLength: 1
+                        pattern: ^.*:.*$
+                        type: string
                       priorityClass:
                         description: Enable priority class for the DaemonSet. This
                           is useful for GKE Autopilot clusters, but can be set for
@@ -7894,6 +7895,8 @@ spec:
                           version will be selected when this version specifier is
                           missing.
                         type: string
+                    required:
+                    - preconfigImage
                     type: object
                 type: object
               falconSecret:
@@ -9009,12 +9012,6 @@ spec:
                       type: object
                       x-kubernetes-map-type: atomic
                     type: array
-                  initConfigImage:
-                    description: Location of the init-container image for pre-configuration.
-                      This image should contain the configuration logic that runs
-                      before the main sensor.
-                    pattern: ^.*:.*$
-                    type: string
                   nodeAffinity:
                     description: Specifies node affinity for scheduling the DaemonSet.
                       Defaults to allowing scheduling on all nodes.
@@ -9214,6 +9211,13 @@ spec:
                         type: object
                         x-kubernetes-map-type: atomic
                     type: object
+                  preconfigImage:
+                    description: Location of the pre-configuration container image.
+                      This image should contain the configuration logic that runs
+                      before the main sensor.
+                    minLength: 1
+                    pattern: ^.*:.*$
+                    type: string
                   priorityClass:
                     description: Enable priority class for the DaemonSet. This is
                       useful for GKE Autopilot clusters, but can be set for any cluster.
@@ -9399,6 +9403,8 @@ spec:
                     description: Version of the sensor to be installed. The latest
                       version will be selected when this version specifier is missing.
                     type: string
+                required:
+                - preconfigImage
                 type: object
             type: object
           status:
