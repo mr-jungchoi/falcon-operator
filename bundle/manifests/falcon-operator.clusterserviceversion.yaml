@@ -148,7 +148,7 @@ metadata:
     capabilities: Seamless Upgrades
     categories: Security,Monitoring
     containerImage: quay.io/crowdstrike/falcon-operator
-    createdAt: "2025-11-05T18:34:58Z"
+    createdAt: "2026-01-23T19:01:45Z"
     description: Falcon Operator installs CrowdStrike Falcon Sensors on the cluster
     features.operators.openshift.io/cnf: "false"
     features.operators.openshift.io/cni: "false"
@@ -165,7 +165,7 @@ metadata:
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v4
     repository: https://github.com/CrowdStrike/falcon-operator
     support: Community Only
-  name: falcon-operator.v1.5.0
+  name: falcon-operator.v1.10.0-preconfig
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -1067,6 +1067,9 @@ spec:
       - description: Additional configuration for Falcon Image Analyzer deployment.
         displayName: Falcon Image Analyzer Configuration
         path: falconImageAnalyzer.imageAnalyzerConfig
+      - description: Configure a list of image names for Image Analyzer to ignore.
+        displayName: Ignore Images List
+        path: falconImageAnalyzer.imageAnalyzerConfig.exclusions.imageNames
       - description: Certificate validity duration in number of days.
         displayName: Falcon Image Analyzer TLS Certificate Expiration (days)
         path: falconImageAnalyzer.imageAnalyzerConfig.iarAgentService.certExpiration
@@ -1674,6 +1677,9 @@ spec:
       - description: Additional configuration for Falcon Image Analyzer deployment.
         displayName: Falcon Image Analyzer Configuration
         path: imageAnalyzerConfig
+      - description: Configure a list of image names for Image Analyzer to ignore.
+        displayName: Ignore Images List
+        path: imageAnalyzerConfig.exclusions.imageNames
       - description: Certificate validity duration in number of days.
         displayName: Falcon Image Analyzer TLS Certificate Expiration (days)
         path: imageAnalyzerConfig.iarAgentService.certExpiration
@@ -2340,7 +2346,7 @@ spec:
                       fieldPath: metadata.annotations['olm.targetNamespaces']
                 - name: OPERATOR_NAME
                   value: falcon-operator
-                image: quay.io/crowdstrike/falcon-operator:1.6.0
+                image: falcon-operator:1.10.0-preconfig
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -2439,4 +2445,4 @@ spec:
   provider:
     name: CrowdStrike
     url: https://crowdStrike.com
-  version: 1.5.0
+  version: 1.10.0-preconfig
