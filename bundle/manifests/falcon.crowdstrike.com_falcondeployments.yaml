@@ -111,6 +111,11 @@ spec:
                         description: Determines if the admission controller webhook
                           is enabled
                         type: boolean
+                      configMapWatcherEnabled:
+                        default: true
+                        description: Determines if the admission controller watches
+                          for configMap events
+                        type: boolean
                       containerPort:
                         default: 4443
                         description: Port on which the Falcon Admission Controller
@@ -3351,6 +3356,12 @@ spec:
                       exclusions:
                         description: Exclusions for the Falcon Image Analyzer.
                         properties:
+                          imageNames:
+                            description: Configure a list of image names for Image
+                              Analyzer to ignore.
+                            items:
+                              type: string
+                            type: array
                           namespaces:
                             description: Configure a list of namespaces for Image
                               Analyzer to ignore.
@@ -4013,6 +4024,12 @@ spec:
                         enum:
                         - kernel
                         - bpf
+                        type: string
+                      clusterName:
+                        description: When running on an unmanaged K8S cluster, set
+                          a cluster name. When running on managed, K8S cluster name
+                          is resolved cloud-side
+                        pattern: ^[0-9a-zA-Z]{1}[0-9a-zA-Z_-]{1,99}$
                         type: string
                       disableCleanup:
                         default: false
