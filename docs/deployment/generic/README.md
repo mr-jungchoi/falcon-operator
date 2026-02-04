@@ -34,6 +34,13 @@ This document will guide you through the installation of the Falcon Operator and
 
 ### Deploying the Falcon Node Sensor
 
+> [!NOTE]
+> DaemonSet deployments of sensor versions 7.33 and earlier of the Falcon sensor for Linux are blocked from updates and
+> uninstallation if their sensor update policy has the **Uninstall and maintenance protection** setting enabled. Before
+> upgrading or uninstalling these versions of the sensor, move the sensors to a new sensor update policy with this
+> policy setting turned off. For more info, see [Sensor update and uninstallation for DaemonSet sensor versions 7.33
+> and lower](https://falcon.crowdstrike.com/documentation/anchor/sc632f2e).
+
 <details>
   <summary>Click to expand</summary>
 
@@ -111,6 +118,13 @@ kubectl apply -f https://github.com/CrowdStrike/falcon-operator/releases/downloa
 
 > [!WARNING]
 > It is essential to uninstall ALL of the deployed custom resources before uninstalling the Falcon Operator to ensure proper cleanup.
+
+> [!NOTE]
+> DaemonSet deployments of sensor versions 7.33 and earlier of the Falcon sensor for Linux are blocked from updates and
+> uninstallation if their sensor update policy has the **Uninstall and maintenance protection** setting enabled. Before
+> upgrading or uninstalling these versions of the sensor, move the sensors to a new sensor update policy with this
+> policy setting turned off. For more info, see [Sensor update and uninstallation for DaemonSet sensor versions 7.33
+> and lower](https://falcon.crowdstrike.com/documentation/anchor/sc632f2e).
 
 ### Uninstalling the Falcon Node Sensor
 
