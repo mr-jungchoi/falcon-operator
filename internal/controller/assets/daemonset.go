@@ -267,7 +267,7 @@ fi`,
 ls /data;
 if [[ -f /data/extract_config ]]; then
   echo "Extracting configuration";
-  tar -xvf /opt/crowdstrike_config.tar -C /opt/CrowdStrike/;
+  tar -xvf /opt/golden_config.tar -C /opt/CrowdStrike/;
 else
   echo "Skipping configuration extraction";
 fi`,
