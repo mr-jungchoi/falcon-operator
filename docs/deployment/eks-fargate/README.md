@@ -236,8 +236,8 @@ Using `aws`, `eksctl`, and `kubectl` command-line tools, perform the following s
   export EKS_CLUSTER_NAME="insert your cluster name"
 
   export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-  iam_policy_name="FalconContainerEcrPull"
-  iam_policy_arn="arn:aws:iam::${AWS_ACCOUNT_ID}:policy/${iam_policy_name}"
+  export IAM_POLICY_NAME="FalconContainerEcrPull"
+  export IAM_POLICY_ARN="arn:aws:iam::${AWS_ACCOUNT_ID}:policy/${IAM_POLICY_NAME}"
   ```
 
 - Create AWS IAM Policy for ECR image pulling
@@ -271,7 +271,7 @@ Using `aws`, `eksctl`, and `kubectl` command-line tools, perform the following s
 
   aws iam create-policy \
       --region "$AWS_REGION" \
-      --policy-name ${iam_policy_name} \
+      --policy-name ${IAM_POLICY_NAME} \
       --policy-document 'file://policy.json' \
       --description "Policy to enable Falcon Container Injector to pull container image from ECR"
   ```
@@ -283,7 +283,7 @@ Using `aws`, `eksctl`, and `kubectl` command-line tools, perform the following s
          --namespace falcon-system \
          --region "$AWS_REGION" \
          --cluster "${EKS_CLUSTER_NAME}" \
-         --attach-policy-arn "${iam_policy_arn}" \
+         --attach-policy-arn "${IAM_POLICY_ARN}" \
          --approve \
          --override-existing-serviceaccounts
   ```
@@ -340,8 +340,8 @@ Using `aws`, `eksctl`, and `kubectl` command-line tools, perform the following s
   export EKS_CLUSTER_NAME="insert your cluster name"
 
   export AWS_ACCOUNT_ID=$(aws sts get-caller-identity --query Account --output text)
-  iam_policy_name="FalconAdmissionEcrPull"
-  iam_policy_arn="arn:aws:iam::${AWS_ACCOUNT_ID}:policy/${iam_policy_name}"
+  export IAM_POLICY_NAME="FalconAdmissionEcrPull"
+  export IAM_POLICY_ARN="arn:aws:iam::${AWS_ACCOUNT_ID}:policy/${IAM_POLICY_NAME}"
   ```
 
 - Create AWS IAM Policy for ECR image pulling
@@ -375,7 +375,7 @@ Using `aws`, `eksctl`, and `kubectl` command-line tools, perform the following s
 
   aws iam create-policy \
       --region "$AWS_REGION" \
-      --policy-name ${iam_policy_name} \
+      --policy-name ${IAM_POLICY_NAME} \
       --policy-document 'file://policy.json' \
       --description "Policy to enable Falcon Admission Controller to pull container image from ECR"
   ```
@@ -387,7 +387,7 @@ Using `aws`, `eksctl`, and `kubectl` command-line tools, perform the following s
          --namespace falcon-kac \
          --region "$AWS_REGION" \
          --cluster "${EKS_CLUSTER_NAME}" \
-         --attach-policy-arn "${iam_policy_arn}" \
+         --attach-policy-arn "${IAM_POLICY_ARN}" \
          --approve \
          --override-existing-serviceaccounts
   ```
