@@ -39,7 +39,7 @@ RUN GOOS=${TARGETOS:-linux} GOARCH=${TARGETARCH} go build -a -tags \
 
 # Use distroless as minimal base image to package the manager binary
 # Refer to https://github.com/GoogleContainerTools/distroless for more details
-FROM registry.access.redhat.com/ubi9-minimal:9.8
+FROM registry.access.redhat.com/ubi9-minimal:9.8-1788166357
 ARG VERSION
 WORKDIR /
 COPY LICENSE licenses/
